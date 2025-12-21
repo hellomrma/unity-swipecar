@@ -21,5 +21,10 @@ public class GameManager : MonoBehaviour
     {
         float distanceValue = flag.transform.position.x - car.transform.position.x;
         distance.text = "Distance between Car and Flag: " + distanceValue.ToString("F2") + "m";
+
+        if (distanceValue < 0f)
+        {
+            distance.text = "You reached the flag!";
+        }
     }
 }
