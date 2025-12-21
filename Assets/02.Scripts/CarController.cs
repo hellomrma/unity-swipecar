@@ -29,14 +29,12 @@ public class CarController : MonoBehaviour
 
         transform.Translate(carSpeed, 0, 0);
 
-        carSpeed *= 0.98f;
-
-        Debug.Log("Car Speed: " + carSpeed);
-
-
         if (carSpeed <= 0.005f)
         {
             carSpeed = 0f;
+        } else
+        {
+            carSpeed *= 0.98f;
         }
     }
 }
