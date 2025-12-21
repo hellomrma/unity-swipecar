@@ -11,10 +11,6 @@ public class CarController2 : MonoBehaviour
     bool isDragging = false;  // 드래그 진행 중인지 확인하는 플래그
     bool hasDraggedOnce = false;  // 한 번이라도 드래그가 발생했는지 확인하는 플래그
 
-    void Start()
-    {
-
-    }
 
     void Update()
     {
