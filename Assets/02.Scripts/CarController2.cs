@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CarController2 : MonoBehaviour
 {
@@ -9,7 +6,6 @@ public class CarController2 : MonoBehaviour
 
     Vector2 startPosition;
     bool isDragging = false;  // 드래그 진행 중인지 확인하는 플래그
-    bool hasDraggedOnce = false;  // 한 번이라도 드래그가 발생했는지 확인하는 플래그
 
 
     void Update()
@@ -20,8 +16,8 @@ public class CarController2 : MonoBehaviour
         // GetMouseButtonUp(0): 마우스 버튼을 떼는 순간 한 번만 true 반환 (단발 입력 감지)
 
 
-        // 한 번도 드래그하지 않았고, 드래그가 진행 중이 아니고, 자동차가 완전히 멈춰있을 때만 새로운 드래그 시작 가능
-        if (Input.GetMouseButtonDown(0) && !hasDraggedOnce && !isDragging)
+        // 드래그가 진행 중이 아니면 언제든지 새로운 드래그 시작 가능
+        if (Input.GetMouseButtonDown(0) && !isDragging)
         {
             startPosition = Input.mousePosition;
             isDragging = true;  // 드래그 시작
@@ -35,20 +31,35 @@ public class CarController2 : MonoBehaviour
 
             carSpeed = (dragGap * 0.005f) * 0.23f;
             isDragging = false;  // 드래그 종료
-            hasDraggedOnce = true;  // 드래그가 한 번 발생했음을 표시 (더 이상 드래그 불가)
         }
 
 
         transform.Translate(carSpeed, 0, 0);
 
-        if (carSpeed <= 0.005f)
+        // 양/음수 분기하여 임계값과 감쇠 적용 (뒤로 가는 동작 포함)
+        if (carSpeed > 0f)
         {
-            carSpeed = 0f;
+            if (carSpeed <= 0.005f)
+            {
+                carSpeed = 0f;
+            }
+            else
+            {
+                carSpeed *= 0.98f;
+            }
         }
-        else
+        else if (carSpeed < 0f)
         {
-            carSpeed *= 0.98f;
+            if (carSpeed >= -0.005f)
+            {
+                carSpeed = 0f;
+            }
+            else
+            {
+                carSpeed *= 0.98f;
+            }
         }
+        // carSpeed == 0f 이면 아무 작업도 하지 않음
     }
 }
 
