@@ -31,10 +31,12 @@ public class CarController2 : MonoBehaviour
 
             carSpeed = (dragGap * 0.005f) * 0.23f;
             isDragging = false;  // 드래그 종료
+            GetComponent<AudioSource>().Play();
         }
 
 
         transform.Translate(carSpeed, 0, 0);
+
 
         // 양/음수 분기하여 임계값과 감쇠 적용 (뒤로 가는 동작 포함)
         if (carSpeed > 0f)
@@ -62,4 +64,3 @@ public class CarController2 : MonoBehaviour
         // carSpeed == 0f 이면 아무 작업도 하지 않음
     }
 }
-
